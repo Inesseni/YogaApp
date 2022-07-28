@@ -11,12 +11,11 @@ import YogaPose2 from './assets/YogaPose2.jpg'
 
 export default function App() {
   const [CurrIndex, setCurrIndex] = useState(0)
-  const [NextIndex, setNextIndex] = useState(0) //why can i not set this to 1 for example??
 
   const [resourceType, setResourceType] = useState('users')
   const [items, setItems] = useState([0])
   const [currPose, setCurrPose] = useState(items[CurrIndex].username)
-  const [nextPose, setNextPose] = useState(items[NextIndex].username)
+  const [nextPose, setNextPose] = useState(items[CurrIndex].username)
   const Server_URL = `https://jsonplaceholder.typicode.com/${resourceType}`
 
 
@@ -26,9 +25,9 @@ export default function App() {
     fetch(Server_URL)
       .then(response => response.json())
       .then(json => setItems(json))
-    //.then(console.log(currPose))      //logs the entry for "title" in the selected item (rn only 'posts' has an entry with "title")
-    //.then(start a timer that will set the next pose in 1 min)
-    console.log(items.length);  //this gives out 1 ?? 
+      .then(console.log(items.length))
+
+    //this gives out 1 ?? is there a callback when completed?
   }, [])
 
   //
@@ -38,15 +37,25 @@ export default function App() {
     console.log(items.length);  //now it shows 10 lol
   }, [currPose])
 
-  useEffect(() => {    
-    //setNextIndex(NextIndex + 1);
-    //setNextPose(items[NextIndex].username);
-  },[CurrIndex])
 
+  function IteratePoses(){
+    if (CurrIndex + 1 === items.length) {
+      setCurrIndex(0);
+    } else {
+      setCurrIndex(CurrIndex +1);
+    }
+    setCurrPose(items[CurrIndex].username);
+
+    if (CurrIndex + 1 === items.length) {
+      setNextPose(items[0].username);
+    } else {
+      setNextPose(items[CurrIndex + 1].username);
+    }
+  }
 
   return (
     <View style={styles.container}>
-      
+
       <Text style={styles.AppName}>SUPER AWESOME YOGA APP!</Text>
       <Text>{resourceType}</Text>
 
@@ -54,7 +63,7 @@ export default function App() {
         <View>
           <Text style={styles.NextPoseText}>Next:</Text>
           <Text style={styles.NextPoseName}>Warrior</Text>
-          <Text>{currPose}</Text>
+          <Text>{nextPose}</Text>
 
         </View>
 
@@ -63,18 +72,7 @@ export default function App() {
         </View>
 
         <View style={styles.NextButton} >
-          <button onClick={() => {
-            if (CurrIndex == items.length) {
-              CurrIndex = 0;
-            } 
-              setCurrIndex(CurrIndex + 1);
-              setCurrPose(items[CurrIndex].username);
-              //this one doesn't work at all:
-              setNextIndex(CurrIndex + 1);
-              setNextPose(items[NextIndex].username);
-            
-
-          }}>Go to next Pose</button></View>
+          <button onClick={() => { IteratePoses(); }}>Go to next Pose</button></View>
       </View>
 
 
@@ -82,8 +80,8 @@ export default function App() {
       <View style={styles.YogastretchWrapper}>
         <Text style={styles.sectionTitle}>Do this Yoga pose for 3 Minutes:</Text>
         <Text style={styles.NextPoseName}>Downward facing dog</Text>
-        <Text>{nextPose}</Text>
-        
+        <Text>{currPose}</Text>
+
         <View style={styles.CurrentImage}>
           <img src={YogaPose1} alt="DownwardDog" />
         </View>
@@ -159,10 +157,8 @@ for example one comp for the current pose, second Comp for the next pose
 
 3.
 Issues:
-Can't set NextIndex to CurrInde +1 ?
-How/where can i check if i am out of range in the array and set index to 0 again?
 console.log(length of array) in the beginning doesn't show the correct length .. also doesn't load the default element from the beginning?
-
+Can i use ++ instead of +1 ?
 
 Snippets:
 

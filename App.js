@@ -14,6 +14,11 @@ export default function App() {
 
   const [resourceType, setResourceType] = useState('users')
   const [items, setItems] = useState([0])
+  
+  // I wouldn't track these individually.  It'd make more sense to say 
+  // const [currPoseIndex, setCurrPoseIndex] = useState(0)
+  // Then "going to the next pose" is as easy as
+  // setCurrPoseIndex(currPoseIndex + 1)
   const [currPose, setCurrPose] = useState(items[CurrIndex].username)
   const [nextPose, setNextPose] = useState(items[CurrIndex].username)
   const Server_URL = `https://jsonplaceholder.typicode.com/${resourceType}`
@@ -26,8 +31,23 @@ export default function App() {
       .then(response => response.json())
       .then(json => setItems(json))
       .then(console.log(items.length))
-
     //this gives out 1 ?? is there a callback when completed?
+    
+    // This is because of the way functions vs values work
+    //
+    // When it runs fetch.then.then.then it calculates the inside of each () before starting
+    // The inside of (Server_URL) is (`https://.....`)
+    // The inside of (response => response.json()) is _the function_ (response => response.json())
+    // The inside of (json => setItems(json)) is _the function_ (json => setItems(json))
+    // The inside of (console.log(items.length)) is (1) because it _runs_ console.log(items.length).  Remember, it has not acutally run "fetch" yet
+    //   i.e. if you want the length of the items, you need to put (() => console.log(items.length)) because `() =>` means "this is a function" so run
+    //   it _after_ "fetch" gets run
+    // 
+    // At the beginning, I would avoid using () => ...
+    // When you want it to do a funciton, you can type
+    // .then(function () { console.log(items.length) })
+    // Doing this will help you learn when to pass a _function_ and when to pass a _value_
+    // "() => ..." is shorthand for "function () { ... }"
   }, [])
 
   //
@@ -35,9 +55,20 @@ export default function App() {
     console.log(currPose);
     console.log(nextPose);
     console.log(items.length);  //now it shows 10 lol
+    
+    // Yes, this shows 10 because this effect _function_ (notice the () => at the top means "this is a function")
+    // gets run every time currPost changes.  So the first time, it will show 1, then the next time it will show whatever
+    // items.length is when currPose changed
   }, [currPose])
 
 
+  // It's very standard to put functions in camelCase.  i.e. the first letter is lowercase then every word is capitalized
+  // i.e. this should be iteratePoses
+  //
+  // The name could be more descriptive though.  It would make more sense to say something like "goToNextPose" since that's what
+  // it "does" rathern than "how would a programmer describe it to his engineer friends"
+  //
+  // In a "better" world you wouldn't do this though.  See what I wrote below
   function IteratePoses(){
     if (CurrIndex + 1 === items.length) {
       setCurrIndex(0);
@@ -72,6 +103,7 @@ export default function App() {
         </View>
 
         <View style={styles.NextButton} >
+          {/* It would be better to write something like `onClick={function () { setCurrPoseIndex(currPoseIndex + 1) }} */}
           <button onClick={() => { IteratePoses(); }}>Go to next Pose</button></View>
       </View>
 
@@ -151,14 +183,30 @@ const styles = StyleSheet.create({
 adjust picture automatically to the parent wrapper?
 zB das Thumbnail für nächste Pose, jetzt ist es hardcoded
 
+the API I'm giving you doesn't have pictures.  You could create them yourself (IRL you'd make designers do it)
+or leave it out for now
+
 2.
 Refractoring the project so that i have components in different scripts? 
 for example one comp for the current pose, second Comp for the next pose
+
+You should have a "pose" component, which just takes a "pose" data structure (you should use Typescript TBH)
+
+Something like
+<Pose data={items[currPoseIndex]} />
+would be very nice indeed
 
 3.
 Issues:
 console.log(length of array) in the beginning doesn't show the correct length .. also doesn't load the default element from the beginning?
 Can i use ++ instead of +1 ?
+
+No you cannot use ++ instead of +1.  It shows the correct value.
+
+console.log(items.length) menas "outputs the length then return 'void'" and that is a _value_
+() => console.log(items.length) means "this is a function which outputs the length then returns 'void'"
+
+`.then()` takes _functions_ not _values_ as inputs.  You need to pass a function to .then, not a value
 
 Snippets:
 

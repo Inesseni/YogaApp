@@ -6,21 +6,21 @@ import React, { useState, useEffect } from 'react';
 import YogaPose1 from './assets/YogaPose1.jpg'
 import YogaPose2 from './assets/YogaPose2.jpg'
 
+import Pose from './components/Pose';
+
 //show only first entry of the fetched array, save it in currentPose
 //need a function that changes the currentPose to the next one in the array after ~1 Minute
 
 export default function App() {
-  const [CurrIndex, setCurrIndex] = useState(0)
 
+  //state variables, if changes, site rerenders. u want to render little as possible
+  const [CurrIndex, setCurrIndex] = useState(0)
   const [resourceType, setResourceType] = useState('users')
-  const [items, setItems] = useState([0])
-  
-  // I wouldn't track these individually.  It'd make more sense to say 
-  // const [currPoseIndex, setCurrPoseIndex] = useState(0)
-  // Then "going to the next pose" is as easy as
-  // setCurrPoseIndex(currPoseIndex + 1)
-  const [currPose, setCurrPose] = useState(items[CurrIndex].username)
-  const [nextPose, setNextPose] = useState(items[CurrIndex].username)
+  const [items, setItems] = useState([])
+
+  // this "updates" every time automatically app renders, so every time state variable changes
+  const currPose = items[CurrIndex]
+  const nextPose = items[CurrIndex + 1]
   const Server_URL = `https://jsonplaceholder.typicode.com/${resourceType}`
 
 
@@ -29,10 +29,13 @@ export default function App() {
     console.log("startedddd!");
     fetch(Server_URL)
       .then(response => response.json())
-      .then(json => setItems(json))
-      .then(console.log(items.length))
+      .then(function logData(jsn) {
+        console.log(jsn.length)
+        return jsn
+      })
+      .then(function setData(resultOfThePreviousThenStatement) { setItems(resultOfThePreviousThenStatement) })
     //this gives out 1 ?? is there a callback when completed?
-    
+
     // This is because of the way functions vs values work
     //
     // When it runs fetch.then.then.then it calculates the inside of each () before starting
@@ -55,7 +58,7 @@ export default function App() {
     console.log(currPose);
     console.log(nextPose);
     console.log(items.length);  //now it shows 10 lol
-    
+
     // Yes, this shows 10 because this effect _function_ (notice the () => at the top means "this is a function")
     // gets run every time currPost changes.  So the first time, it will show 1, then the next time it will show whatever
     // items.length is when currPose changed
@@ -69,11 +72,11 @@ export default function App() {
   // it "does" rathern than "how would a programmer describe it to his engineer friends"
   //
   // In a "better" world you wouldn't do this though.  See what I wrote below
-  function IteratePoses(){
+  function goToNextPose() {
     if (CurrIndex + 1 === items.length) {
       setCurrIndex(0);
     } else {
-      setCurrIndex(CurrIndex +1);
+      setCurrIndex(CurrIndex + 1);
     }
     setCurrPose(items[CurrIndex].username);
 
@@ -104,21 +107,13 @@ export default function App() {
 
         <View style={styles.NextButton} >
           {/* It would be better to write something like `onClick={function () { setCurrPoseIndex(currPoseIndex + 1) }} */}
-          <button onClick={() => { IteratePoses(); }}>Go to next Pose</button></View>
+          <button onClick={() => { goToNextPose(); }}>Go to next Pose</button></View>
       </View>
 
+<Pose data={items[CurrIndex]}/>
+<Pose data={items[(CurrIndex + 1) % items.length]}/>
 
 
-      <View style={styles.YogastretchWrapper}>
-        <Text style={styles.sectionTitle}>Do this Yoga pose for 3 Minutes:</Text>
-        <Text style={styles.NextPoseName}>Downward facing dog</Text>
-        <Text>{currPose}</Text>
-
-        <View style={styles.CurrentImage}>
-          <img src={YogaPose1} alt="DownwardDog" />
-        </View>
-
-      </View>
     </View>
   );
 }

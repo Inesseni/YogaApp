@@ -1,16 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import reactDom from 'react-dom';
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 
-import YogaPose1 from './assets/YogaPose1.jpg'
-import YogaPose2 from './assets/YogaPose2.jpg'
 
 import Pose from './components/Pose';
 import PosePreview from './components/PosePreview';
 
 //show only first entry of the fetched array, save it in currentPose
 //need a function that changes the currentPose to the next one in the array after ~1 Minute
+
+
+
 
 export default function App() {
 
@@ -36,7 +35,7 @@ export default function App() {
       .then(function setData(resultOfThePreviousThenStatement) { setItems(resultOfThePreviousThenStatement) })
   }, [])
 
-  //this runs every time as a sideeffect when the currPose variable changes
+  //this runs every time as a "sideeffect" when the currPose variable changes
   useEffect(() => {
     console.log(currPose);
     console.log(nextPose);
@@ -44,16 +43,20 @@ export default function App() {
   }, [currPose])
 
 
+
+
   return (
     <View style={styles.container}>
 
       <Text style={styles.AppName}>SUPER AWESOME YOGA APP!</Text>
 
+
+
       {/*My Components: */}
       <PosePreview data={items[(CurrIndex + 1) % items.length]} />
       <Pose data={items[(CurrIndex) % items.length]} />
 
-      {/*Button to next pose:*/}
+      {/*Button to next pose: */}
       <View style={styles.NextButton} >
         <button onClick={function () { setCurrIndex(CurrIndex + 1) }}>Go to next Pose</button>
       </View>
@@ -61,11 +64,19 @@ export default function App() {
   );
 }
 
+
+
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f28d79',
     padding: 20,
+    maxWidth: 800,
+    alignSelf: 'center',
   },
   AppName: {
     fontSize: 40,
@@ -85,17 +96,18 @@ const styles = StyleSheet.create({
 
 /*
 Questions:
-1. Current Image disappears now
+1. whats the advantage of using components vs. "normal" code? only reusability?
+
+
 
 Snippets:
 
-      
   {items.map((item) => {
     return <pre>{
       JSON.stringify(item)
       }</pre>
   })}
-  ::Shows all the entries in a text block:
+  ::Shows all the entries in a text block
 
 
   <Pose data={items[(CurrIndex) % items.length]} />

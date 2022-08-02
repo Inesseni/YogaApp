@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 
 import Pose from './components/Pose';
@@ -12,6 +13,28 @@ import PosePreview from './components/PosePreview';
 
 
 export default function App() {
+
+  //my styled components:
+  const AppTitle = styled.h1`
+    fontSize: 40,
+    fontWeight: 1000,
+    textAlign: 'center',
+    marginBottom: 30,
+    color: '#ffffff',
+  `;
+
+  const Button = styled.button`
+    /* Adapt the colors based on primary prop */
+    background: ${props => props.primary ? "palevioletred" : "white"};
+    color: ${props => props.primary ? "white" : "palevioletred"};
+
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid palevioletred;
+    border-radius: 3px;
+`;
+
 
   //state variables, if changes, site rerenders. u want to render little as possible
   const [CurrIndex, setCurrIndex] = useState(0)
@@ -47,27 +70,17 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-
-      <Text style={styles.AppName}>SUPER AWESOME YOGA APP!</Text>
-
-
+      <AppTitle>SUPER AWESOME YOGA APP!</AppTitle>
 
       {/*My Components: */}
       <PosePreview data={items[(CurrIndex + 1) % items.length]} />
       <Pose data={items[(CurrIndex) % items.length]} />
 
       {/*Button to next pose: */}
-      <View style={styles.NextButton} >
-        <button onClick={function () { setCurrIndex(CurrIndex + 1) }}>Go to next Pose</button>
-      </View>
+        <Button onClick={function () { setCurrIndex(CurrIndex + 1) }}>Go to next Pose</Button>
     </View>
   );
 }
-
-
-
-
-
 
 
 const styles = StyleSheet.create({
@@ -78,18 +91,6 @@ const styles = StyleSheet.create({
     maxWidth: 800,
     alignSelf: 'center',
   },
-  AppName: {
-    fontSize: 40,
-    fontWeight: 1000,
-    textAlign: 'center',
-    marginBottom: 30,
-    color: '#ffffff',
-  },
-  NextButton: {
-    width: 75,
-    alignSelf: 'flex-end',
-  },
-
 });
 
 
@@ -97,7 +98,8 @@ const styles = StyleSheet.create({
 /*
 Questions:
 1. whats the advantage of using components vs. "normal" code? only reusability?
-
+2. How can i use fonts loaded from a link?
+3. Styled container didn't work :c also, why do i not have a auto complete in styled-components?
 
 
 Snippets:

@@ -14,13 +14,13 @@ export default function PosePreview(props) {
     return <View style={styles.nextPoseWrapper}>
         <View>
             <Text style={styles.NextPoseText}>Next:</Text>
-            <Text style={styles.NextPoseName} >{nextPose?.name}</Text>
+            <Text style={styles.NextPoseName} >{nextPose?.Name}</Text>
         </View>
 
         <View style={styles.NextImageThumbnail}>
             <img src={YogaPose2} alt="Warrior" />
         </View>
-        {/**how can i use a button inside a component to change values in the parent ? 
+        {/**
         <View style={styles.NextButton} >
             <button onClick={function () { setCurrIndex(CurrIndex + 1) }}>Go to next Pose</button>
         </View>*/}
@@ -33,26 +33,30 @@ const styles = StyleSheet.create({
 
     nextPoseWrapper: {
         height: 75,
-        backgroundColor: '#fff',
+        backgroundColor: '#BDD7DB',
         justifyContent: 'flex-end',
-        alignItems: 'flex-end',
+        alignItems: 'center',
         flexDirection: 'row',
         borderRadius: 10,
         overflow: 'hidden',
+        marginTop: 20,
     },
     NextImageThumbnail: {
-        maxWidth: 100,
+        maxWidth: 110,
         flex: 1,
+        marginLeft: 20,
     },
     NextPoseName: {
-        fontSize: 30,
+        fontSize: 20,
         fontWeight: 600,
         alignSelf: 'flex-end',
+        color: '#4A5043',
     },
     NextPoseText: {
         flex: 1,
         textAlign: 'right',
         alignSelf: 'flex-end',
+        color: '#4A5043',
 
     },
     NextButton: {

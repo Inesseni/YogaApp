@@ -1,26 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { StyleSheet, Text, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
+import Pose from "./components/Pose";
+import PosePreview from "./components/PosePreview";
 
-import Pose from './components/Pose';
-import PosePreview from './components/PosePreview';
-import { Button } from 'react-native-web';
-
-//show only first entry of the fetched array, save it in currentPose
-//need a function that changes the currentPose to the next one in the array after ~1 Minute
-
-
-
-
-export default function App() {
-
-  //my styled components:
-  const Button = styled.button`
+const Button = styled.button`
   /* Adapt the colors based on primary prop */
-  background: ${props => props.primary ? "palevioletred" : "#palevioletr"};
-  color: ${props => props.primary ? "white" : "palevioletred"};
-  
+  background: ${(props) => (props.primary ? "palevioletred" : "#palevioletr")};
+  color: ${(props) => (props.primary ? "white" : "palevioletred")};
   font-size: 1em;
   margin: 3em;
   padding: 0.25em 1em;
@@ -30,86 +18,84 @@ export default function App() {
     background-color: palevioletred;
     color: white;
   }
-  `;
+`;
 
+const Title = styled.text(() => ({
+  fontSize: 40,
+  fontWeight: 1000,
+  textAlign: "center",
+  marginBottom: 30,
+  color: "#4A5043",
+}));
 
+const Container = styled.div((props) => ({
+  flex: 1,
+  backgroundColor: props.red ? "red" : "#9AC2C9",
+  padding: 20,
+  // maxWidth: 800,
+}));
+
+export default function App() {
   //state variables, if changes, site rerenders. u want to render little as possible
-  const [CurrIndex, setCurrIndex] = useState(0)
-  const [items, setItems] = useState([])
+  const [CurrIndex, setCurrIndex] = useState(0);
+  const [items, setItems] = useState([]);
 
   // this "updates" every time automatically when the app renders, so every time state variable changes
-  const currPose = items[CurrIndex]
-  const nextPose = items[CurrIndex + 1]
-  const Server_URL = `https://elliottrarden.me/assets/stretches.json`
-
+  const currPose = items[CurrIndex];
+  const nextPose = items[CurrIndex + 1];
+  const Server_URL = `https://elliottrarden.me/assets/stretches.json`;
 
   //this runs only once when website opened -> right approach
   //variables used in each .fetch line is the result of the .fetch above
   useEffect(() => {
     fetch(Server_URL)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(function logData(jsn) {
-        console.log(jsn.length)
-        return jsn
+        console.log(jsn.length);
+        return jsn;
       })
-      .then(function setData(resultOfThePreviousThenStatement) { setItems(resultOfThePreviousThenStatement) })
-  }, [])
-
-  //this runs every time as a "sideeffect" when the currPose variable changes
-  useEffect(() => {
-    console.log(currPose);
-    console.log(nextPose);
-    console.log(items.length);
-  }, [currPose])
-
-
+      .then(function setData(resultOfThePreviousThenStatement) {
+        setItems(resultOfThePreviousThenStatement);
+      });
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.AppTitle}>SUPER AWESOME YOGA APP!</Text>
+    <Container red>
+      <Title>SUPER AWESOME YOGA APP!</Title>
 
       {/*My Components: */}
-      <Pose data={items[(CurrIndex) % items.length]} />
+      <Pose data={items[CurrIndex % items.length]} onComplete={() => {console.log("HELLO")}} />
       <PosePreview data={items[(CurrIndex + 1) % items.length]} />
 
-
       {/*Button to next pose: */}
-        <Button onClick={function () { setCurrIndex(CurrIndex + 1) }}>Go to next Pose</Button>
-    </View>
+      <Button
+        onClick={function () {
+          setCurrIndex(CurrIndex + 1);
+        }}
+      >
+        Go to next Pose
+      </Button>
+    </Container>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#9AC2C9',
-    color: '#4A5043',
-    padding: 20,
-    maxWidth: 800,
-    alignSelf: 'center',
-  },
-  AppTitle: {
-    fontSize: 40,
-    fontWeight: 1000,
-    textAlign: 'center',
-    marginBottom: 30,
-    color: '#4A5043',
-  },
-});
-
-
 
 /*
 Questions:
 
 1. How can i use fonts loaded from a link?
+https://docs.expo.dev/guides/using-custom-fonts/
 2. Styled "container" didn't work :c also, why do i not have a auto complete in styled-components css?
+Because styled.container doesn't exist.  In VSCode, you can just type "styled." and it will show you all th ethings
 3. I get a warning from the button now that i called styled inside another component and i should put it outside a function comp / render method, but it didn't work for me
+Fixed
 4. container BG is colored, but Left and right from container is white again.. ??
-5. how can i use a button inside a component to change values in the parent ? (example: My Button in parent starts the countdown in child component)
-6. How can i start the timer again? -> check in Pose.js
 
+5. how can i use a button inside a component to change values in the parent ? (example: My Button in parent starts the countdown in child component)
+In general "on..." props are used for kids to talk to parents and other props are used for parents to tlak to kids
+6. How can i start the timer again? -> check in Pose.js
+Check the useState hook inside pose as well as the countdown renderer
+7. Flexbox
+https://reactnative.dev/docs/flexbox
 
 
 All Poses:__________

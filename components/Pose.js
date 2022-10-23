@@ -21,7 +21,6 @@ const Button = styled.button`
   }
 `;
 
-//doesnt work, whyyyy???????? :c
 const Img_CurrPose = styled.div`
     minWidth: 500,
     marginTop: 10,
@@ -51,7 +50,9 @@ export default function Pose(props) {
         date={endTime}
         renderer={({ seconds }) => (
           <Text style={styles.TimerText}>
-            {seconds > 0 ? `You have ${seconds}s left` : "You are good to go!"}
+            {seconds > 0
+              ? `You have ${seconds} seconds left`
+              : "You are good to go!"}
           </Text>
         )}
         overtime
@@ -67,8 +68,8 @@ export default function Pose(props) {
 
 const styles = StyleSheet.create({
   CurrentImage: {
-    minWidth: 300,
-    marginTop: 10,
+    width: 600,
+    marginTop: 30,
     borderRadius: 10,
     border: "2px solid rgba(0, 0, 0, 0.2)",
     overflow: "hidden",
@@ -78,12 +79,14 @@ const styles = StyleSheet.create({
     color: "#4A5043",
   },
   PoseName: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: 600,
     alignSelf: "flex-start",
     color: "#fff",
   },
   TimerText: {
+    fontSize: 20,
+    marginTop: 10,
     color: "#fff",
   },
 });

@@ -1,67 +1,71 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import styled from "styled-components";
 
-import YogaPose2 from "../assets/YogaPose2.jpg"
+import YogaPose2 from "../assets/YogaPose2.jpg";
+
+const NextButton = styled.button`
+  /* Adapt the colors based on primary prop */
+  background: white;
+  color: ${(props) => (props.primary ? "white" : "palevioletred")};
+  border: 0px solid palevioletred;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 80px;
+  width: 300px;
+  margin-top: 30px;
+
+  &:hover {
+    background-color: white;
+    color: white;
+    border: 2px solid palevioletred;
+  }
+`;
 
 export default function PosePreview(props) {
+  const nextPose = props.data;
 
-    const nextPose = props.data
+  if (nextPose === undefined) {
+    return null;
+  }
 
-    if (nextPose === undefined) {
-        return null
-    }
-
-    return <View style={styles.nextPoseWrapper}>
-        <View>
-            <Text style={styles.NextPoseText}>Next:</Text>
-            <Text style={styles.NextPoseName} >{nextPose?.Name}</Text>
+  return (
+    <NextButton onClick={props.onClickMe}>
+      <View style={styles.nextPoseWrapper}>
+        <View style={{ flex: 3 }}>
+          <Text style={styles.NextPoseText}>Next:</Text>
+          <Text style={styles.NextPoseName}>{nextPose?.Name}</Text>
         </View>
 
         <View style={styles.NextImageThumbnail}>
-            <img src={YogaPose2} alt="Warrior" />
+          <img src={YogaPose2} alt="Warrior" />
         </View>
-        {/**
-        <View style={styles.NextButton} >
-            <button onClick={function () { setCurrIndex(CurrIndex + 1) }}>Go to next Pose</button>
-        </View>*/}
-
-    </View >
-
+      </View>
+    </NextButton>
+  );
 }
 
 const styles = StyleSheet.create({
-
-    nextPoseWrapper: {
-        height: 75,
-        backgroundColor: '#BDD7DB',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        flexDirection: 'row',
-        borderRadius: 10,
-        overflow: 'hidden',
-        marginTop: 20,
-    },
-    NextImageThumbnail: {
-        maxWidth: 110,
-        flex: 1,
-        marginLeft: 20,
-    },
-    NextPoseName: {
-        fontSize: 20,
-        fontWeight: 600,
-        alignSelf: 'flex-end',
-        color: '#4A5043',
-    },
-    NextPoseText: {
-        flex: 1,
-        textAlign: 'right',
-        alignSelf: 'flex-end',
-        color: '#4A5043',
-
-    },
-    NextButton: {
-        height: 75,
-        alignSelf: 'stretch',
-    },
-
-})
+  nextPoseWrapper: {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-between",
+    padding: 10,
+  },
+  NextImageThumbnail: {
+    flex: 1,
+    alignSelf: "flex-end",
+    height: "100%",
+  },
+  NextPoseName: {
+    fontSize: 20,
+    fontWeight: 600,
+    alignSelf: "flex-start",
+    color: "#4A5043",
+  },
+  NextPoseText: {
+    flex: 1,
+    alignSelf: "flex-start",
+    color: "#4A5043",
+  },
+});

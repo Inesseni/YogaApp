@@ -25,7 +25,7 @@ height: "100vh",
   display: "flex",
   maxWidth: "300px",
   flexDirection: "column",
-  backgroundColor: MyColors.white,
+  backgroundColor: MyColors.lightBG,
   overflow: "hidden",
   overflowY: "scroll",
 }));
@@ -63,8 +63,6 @@ function Stretchroutine() {
   }, []);
   //const myIndex = items.getIndex(item.Name));
 
-  const result2 = Array.from(items).indexOf('b');
-
   return (
     <Container>
       <PosesContainer>
@@ -73,16 +71,22 @@ function Stretchroutine() {
             <PoseListItem
               key={item.Name}
               name={item.Name}
+              completed={false}
               onClick={function () {
+                
                 const myIndex = items.findIndex(obj => obj.Name === item.Name);
                 setCurrIndex(myIndex);
+                item.completed = true;
               }}
             />
           ))}
         </MyUl>
       </PosesContainer>
       <MainPoseContainer>
-        <Pose data={items[CurrIndex % items.length]} onComplete={() => {}} />
+        <Pose data={items[CurrIndex % items.length]} onComplete={() => { 
+          items[CurrIndex].completed=true;
+          console.log(items[CurrIndex].completed);
+          }} />
 
         <PosePreview
           data={items[(CurrIndex + 1) % items.length]}

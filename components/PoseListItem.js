@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 /*
@@ -19,12 +19,10 @@ const Button = styled.button`
   background: white;
   color: ${(props) => (props.primary ? "white" : "palevioletred")};
   border: 2px solid white;
-  border-radius: 10px;
   overflow: hidden;
   max-height: 50px;
   width: 100%;
   margin-top: 2px;
-
   &:hover {
     background-color: white;
     color: white;
@@ -37,11 +35,23 @@ const PoseName = styled.p(() => ({
   color: "#4A5043",
   fontFamily: "sans-serif",
   textAlign: "left",
+  flex: 9,
 }));
 
 function PoseListItem({ name, completed, onClick }) {
+  const handleChange = () => { 
+    
+    console.log('The checkbox was toggled'); 
+    
+  }; 
+
+  useEffect(() => {
+   console.log("I changed");
+  }, [completed]);
+
   return (
-    <Button onClick={onClick}>
+    <Button onClick={onClick} style={{display: "flex"}}>
+      <input type="checkbox" defaultChecked={completed} disabled={true} style={{flex: 1, alignSelf: "center"}}/>
       <PoseName>{name}</PoseName>
     </Button>
   );

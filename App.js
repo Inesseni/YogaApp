@@ -30,3 +30,9 @@ const App = () => {
 };
 
 export default App;
+
+
+// i cant check the boy from the parent when time is over ?! do i need to rerender or sth?
+// maybe we should skip a pose if it is already checked?
+// Timer doesn't stop after time is up and doesn't change to new pose? it worked before i think, it broke :c
+// Implementing fotos as a bulk ?

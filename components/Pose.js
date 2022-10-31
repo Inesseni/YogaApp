@@ -3,20 +3,22 @@ import { StyleSheet, Text, View } from "react-native";
 import Countdown from "react-countdown";
 import styled from "styled-components";
 
+import ProgressBar from "./progressBar";
 import YogaPose1 from "../assets/YogaPose1.jpg";
+import { MyColors } from "../styles/MyColors";
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
-  background: ${(props) => (props.primary ? "palevioletred" : "#palevioletr")};
-  color: ${(props) => (props.primary ? "white" : "palevioletred")};
+  background: MyColors.Primary;
+  color: ${(props) => (props.primary ? "white" : MyColors.Primary)};
 
   font-size: 1em;
   margin: 2em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
+  border: 2px solid #ea9999;
   border-radius: 10px;
   &:hover {
-    background-color: palevioletred;
+    background-color: #ea9999;
     color: white;
   }
 `;
@@ -29,26 +31,32 @@ const Img_CurrPose = styled.div`
     overflow: 'hidden',
     `;
 
+    //currPose.Duration = 100 % (zB 10 sekunden)
+    //bei 2 sekunden wäre es
+    //2/10 * 100
 export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
+  const [mySeconds, setSeconds] = useState(0);
 
   useEffect(() => {
     if (currPose !== undefined) {
-      setEndTime(Date.now() + currPose.Duration * 1000);
+      setEndTime(Date.now() + finalCurrPoseDuration);
     }
   }, [currPose]);
 
   if (currPose === undefined) {
     return null;
   }
-
+  const finalCurrPoseDuration = currPose.Duration * 1000;
+  const currSeconds = 0;
   return (
     <View style={styles.YogastretchWrapper}>
       <Text style={styles.PoseName}>{currPose.Name}</Text>
       <Countdown
         date={endTime}
         renderer={({ seconds }) => (
+        
           <Text style={styles.TimerText}>
             {seconds > 0
               ? `You have ${seconds} seconds left`
@@ -57,11 +65,19 @@ export default function Pose(props) {
         )}
         overtime
         onComplete={props.onComplete}
+        
+        onTick={({seconds}) => 
+      //    console.log(currPose.Duration - seconds)
+      setSeconds(currPose.Duration - seconds)
+    }
       />
 
       <View style={styles.CurrentImage}>
         <img src={YogaPose1} alt="DownwardDog" />
+        <ProgressBar  bgcolor={MyColors.myGreen} completed={mySeconds / currPose.Duration * 100} />
       </View>
+      
+     
     </View>
   );
 }

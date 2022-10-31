@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
+import ProgressBar from "../components/progressBar";
 import Pose from "../components/Pose";
 import PosePreview from "../components/PosePreview";
 import PoseListItem from "../components/PoseListItem";
+import { MyColors } from "../styles/MyColors";
 
 const Container = styled.div((props) => ({
   display: "flex",
   flexDirection: "row",
   flex: 1,
-  backgroundColor: "#dbd3d8",
+  backgroundColor: MyColors.lightBG,
 }));
 const MainPoseContainer = styled.div((props) => ({
   display: "flex",
@@ -23,7 +25,7 @@ height: "100vh",
   display: "flex",
   maxWidth: "300px",
   flexDirection: "column",
-  backgroundColor: "white",
+  backgroundColor: MyColors.white,
   overflow: "hidden",
   overflowY: "scroll",
 }));
@@ -81,6 +83,7 @@ function Stretchroutine() {
       </PosesContainer>
       <MainPoseContainer>
         <Pose data={items[CurrIndex % items.length]} onComplete={() => {}} />
+
         <PosePreview
           data={items[(CurrIndex + 1) % items.length]}
           onClickMe={function () {

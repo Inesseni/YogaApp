@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Title = styled.text(() => ({
+const Title = styled.p(() => ({
   fontSize: 40,
   fontWeight: 1000,
   color: "#4A5043",

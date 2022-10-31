@@ -9,7 +9,7 @@ const Container = styled.div((props) => ({
   display: "flex",
   flexDirection: "row",
   flex: 1,
-  backgroundColor: props.red ? "red" : "#9AC2C9",
+  backgroundColor: "#dbd3d8",
 }));
 const MainPoseContainer = styled.div((props) => ({
   display: "flex",
@@ -19,16 +19,20 @@ const MainPoseContainer = styled.div((props) => ({
   alignItems: "center",
 }));
 const PosesContainer = styled.div((props) => ({
-  height: "100%",
+height: "100vh",
   display: "flex",
+  maxWidth: "400px",
   flexDirection: "column",
   backgroundColor: "white",
+  overflow: "hidden",
+  overflowY: "scroll",
 }));
 
 const MyUl = styled.ul((props) => ({
   margin: 0,
   marginLeft: -40,
 }));
+//let ScreenHeight = Dimensions.get("window").height;
 
 function Stretchroutine() {
   //state variables, if changes, site rerenders. u want to render little as possible
@@ -60,10 +64,11 @@ function Stretchroutine() {
         <MyUl>
           {items.map((item) => (
             <PoseListItem
-              key={item.key}
+              key={item.Name}
               name={item.Name}
               onClick={function () {
-                setCurrIndex(item.key);
+                setCurrIndex(CurrIndex + 1);
+                //console.log("i'm clicked");
               }}
             />
           ))}

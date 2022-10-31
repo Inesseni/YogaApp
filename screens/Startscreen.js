@@ -10,7 +10,7 @@ const Container = styled.div((props) => ({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: props.red ? "red" : "#9AC2C9",
+  backgroundColor: "#dbd3d8",
 }));
 
 function Startscreen({ onClick }) {

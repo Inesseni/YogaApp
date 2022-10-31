@@ -21,7 +21,7 @@ const MainPoseContainer = styled.div((props) => ({
 const PosesContainer = styled.div((props) => ({
 height: "100vh",
   display: "flex",
-  maxWidth: "400px",
+  maxWidth: "300px",
   flexDirection: "column",
   backgroundColor: "white",
   overflow: "hidden",
@@ -38,12 +38,14 @@ function Stretchroutine() {
   //state variables, if changes, site rerenders. u want to render little as possible
   const [CurrIndex, setCurrIndex] = useState(0);
   const [items, setItems] = useState([]);
+  const [poseIndex, setPoseIndex] = useState(0);
 
   // this "updates" every time automatically when the app renders, so every time state variable changes
   const currPose = items[CurrIndex];
   const nextPose = items[CurrIndex + 1];
   const Server_URL = `https://elliottrarden.me/assets/stretches.json`;
 
+  
   //this runs only once when website opened -> right approach
   //variables used in each .fetch line is the result of the .fetch above
   useEffect(() => {
@@ -57,6 +59,9 @@ function Stretchroutine() {
         setItems(resultOfThePreviousThenStatement);
       });
   }, []);
+  //const myIndex = items.getIndex(item.Name));
+
+  const result2 = Array.from(items).indexOf('b');
 
   return (
     <Container>
@@ -67,8 +72,8 @@ function Stretchroutine() {
               key={item.Name}
               name={item.Name}
               onClick={function () {
-                setCurrIndex(CurrIndex + 1);
-                //console.log("i'm clicked");
+                const myIndex = items.findIndex(obj => obj.Name === item.Name);
+                setCurrIndex(myIndex);
               }}
             />
           ))}

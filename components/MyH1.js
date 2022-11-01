@@ -8,6 +8,11 @@ const Title = styled.p(() => ({
   fontFamily: "arial",
 }));
 
+// Intead of callign these things "myH1" or "basicButton"
+// it's very common to give them "useful" names.  So, in my 
+// project(s), there's often "title", "subtitle", etc. that way
+// the name of the component is more undersatndable for the
+// main purpose it serves
 function MyH1({ textInput }) {
   return <Title>{textInput}</Title>;
 }

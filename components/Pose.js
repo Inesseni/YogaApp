@@ -31,9 +31,9 @@ const Img_CurrPose = styled.div`
     overflow: 'hidden',
     `;
 
-    //currPose.Duration = 100 % (zB 10 sekunden)
-    //bei 2 sekunden wäre es
-    //2/10 * 100
+//currPose.Duration = 100 % (zB 10 sekunden)
+//bei 2 sekunden wäre es
+//2/10 * 100
 export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
@@ -41,22 +41,22 @@ export default function Pose(props) {
 
   useEffect(() => {
     if (currPose !== undefined) {
-      setEndTime(Date.now() + finalCurrPoseDuration);
+      // Since this variable was _only_ used in one spot, it's a best
+      // practice to not create a new variable and just put the value in directly
+      setEndTime(Date.now() + currPose.Duration * 1000);
     }
   }, [currPose]);
 
   if (currPose === undefined) {
     return null;
   }
-  const finalCurrPoseDuration = currPose.Duration * 1000;
-  const currSeconds = 0;
+
   return (
     <View style={styles.YogastretchWrapper}>
       <Text style={styles.PoseName}>{currPose.Name}</Text>
       <Countdown
         date={endTime}
         renderer={({ seconds }) => (
-        
           <Text style={styles.TimerText}>
             {seconds > 0
               ? `You have ${seconds} seconds left`
@@ -65,23 +65,24 @@ export default function Pose(props) {
         )}
         overtime
         onComplete={props.onComplete}
-        
-        onTick={({seconds}) => 
-      //    console.log(currPose.Duration - seconds)
-      setSeconds(currPose.Duration - seconds)
-    }
+        onTick={({ seconds }) =>
+          setSeconds(currPose.Duration - seconds)
+        }
       />
 
       <View style={styles.CurrentImage}>
         <img src={YogaPose1} alt="DownwardDog" />
-        <ProgressBar  bgcolor={MyColors.myGreen} completed={mySeconds / currPose.Duration * 100} />
+        <ProgressBar
+          bgcolor={MyColors.myGreen}
+          completed={(mySeconds / currPose.Duration) * 100}
+        />
       </View>
-      
-     
     </View>
   );
 }
 
+// If you're going to use StyledComponents you don't need to use StyleSheet.create
+// Generally people use either one or the other
 const styles = StyleSheet.create({
   CurrentImage: {
     width: 600,
@@ -115,10 +116,12 @@ const styles = StyleSheet.create({
         />
     somewhere else an jhust have a variable in the text?
 
+    I'm not sure I undersatnd your question
+
     2. I have a callback for completed, how can i call a function in the parent? 
     guess the same question like with the button"
 
-
+    This component can add a "onCompleted" prop and then just call the parent
 
     Snippets:
     React countdown: https://www.npmjs.com/package/react-countdown#now

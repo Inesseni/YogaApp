@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Countdown from "react-countdown";
 import styled from "styled-components";
 
+
 import ProgressBar from "./progressBar";
 import { resources } from './bulkImages'
 import { MyColors } from "../styles/MyColors";
@@ -10,10 +11,12 @@ import { MyColors } from "../styles/MyColors";
 //currPose.Duration = 100 % (zB 10 sekunden)
 //bei 2 sekunden wäre es
 //2/10 * 100
+
 export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
   const [mySeconds, setSeconds] = useState(0);
+
 
   useEffect(() => {
     if (currPose !== undefined) {

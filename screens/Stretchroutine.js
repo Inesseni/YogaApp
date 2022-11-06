@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Pose from "../components/Pose";
 import PosePreview from "../components/PosePreview";
 import PoseListItem from "../components/PoseListItem";
+import bulkImages from "../components/bulkImages";
 
 const Container = styled.div((props) => ({
   display: "flex",

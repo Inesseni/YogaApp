@@ -22,7 +22,9 @@ const App = () => {
         <Stack.Screen
           name="Stretch"
           component={Stretchroutine}
-          options={{ title: "Your stretching routine" }}
+          options={{
+            title: "Your stretching routine",
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -30,3 +32,13 @@ const App = () => {
 };
 
 export default App;
+
+/*
+Fragen:
+
+- kann ich eine screen transition haben?
+- wie kriege ich den array index der angeklickten pose um die seiten liste zum laufen zu kriegen?
+- Fotos den Übungen zuweisen?
+- progress bar einbauen? https://mui.com/material-ui/react-progress/
+- shrinkable text? zb für button, sonst mach ich schrft einfach kleiner
+*/

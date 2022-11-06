@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Countdown from "react-countdown";
 import styled from "styled-components";
-
+import image1 from "../img/1.jpg";
 import YogaPose1 from "../assets/YogaPose1.jpg";
 
 const Button = styled.button`
@@ -29,9 +29,37 @@ const Img_CurrPose = styled.div`
     overflow: 'hidden',
     `;
 
+const bulkImages = [
+  {
+    key: "1",
+    imagePath: "../img/1.jpg",
+  },
+  {
+    key: "2",
+    imagePath: "../img/2.jpg",
+  },
+  {
+    key: "3",
+    imagePath: "../img/3.jpg",
+  },
+  {
+    key: "4",
+    imagePath: "../img/4.jpg",
+  },
+  {
+    key: "5",
+    imagePath: "../img/5.jpg",
+  },
+  {
+    key: "6",
+    imagePath: "../img/6.jpg",
+  },
+];
+
 export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
+  const myImg = 1;
 
   useEffect(() => {
     if (currPose !== undefined) {
@@ -60,7 +88,11 @@ export default function Pose(props) {
       />
 
       <View style={styles.CurrentImage}>
-        <img src={YogaPose1} alt="DownwardDog" />
+        {/** 
+        {bulkImages.map((index) => (
+          <img src={index.imagePath} title={index.key} alt={index.key} />
+        ))}*/}
+        <img src={require("../img/3.jpg")} alt="DownwardDog" />
       </View>
     </View>
   );

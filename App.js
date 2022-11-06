@@ -33,6 +33,7 @@ const App = () => {
 
 export default App;
 
+<<<<<<< HEAD
 /*
 Fragen:
 
@@ -42,3 +43,10 @@ Fragen:
 - progress bar einbauen? https://mui.com/material-ui/react-progress/
 - shrinkable text? zb für button, sonst mach ich schrft einfach kleiner
 */
+=======
+
+// i cant check the boy from the parent when time is over ?! do i need to rerender or sth?
+// maybe we should skip a pose if it is already checked?
+// Timer doesn't stop after time is up and doesn't change to new pose? it worked before i think, it broke :c
+// Implementing fotos as a bulk ?
+>>>>>>> c5f829282a063acdcf892ab165541993e35a34d6

@@ -2,21 +2,27 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Countdown from "react-countdown";
 import styled from "styled-components";
+<<<<<<< HEAD
 import image1 from "../img/1.jpg";
+=======
+
+import ProgressBar from "./progressBar";
+>>>>>>> c5f829282a063acdcf892ab165541993e35a34d6
 import YogaPose1 from "../assets/YogaPose1.jpg";
+import { MyColors } from "../styles/MyColors";
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
-  background: ${(props) => (props.primary ? "palevioletred" : "#palevioletr")};
-  color: ${(props) => (props.primary ? "white" : "palevioletred")};
+  background: MyColors.Primary;
+  color: ${(props) => (props.primary ? "white" : MyColors.Primary)};
 
   font-size: 1em;
   margin: 2em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
+  border: 2px solid #ea9999;
   border-radius: 10px;
   &:hover {
-    background-color: palevioletred;
+    background-color: #ea9999;
     color: white;
   }
 `;
@@ -29,6 +35,7 @@ const Img_CurrPose = styled.div`
     overflow: 'hidden',
     `;
 
+<<<<<<< HEAD
 const bulkImages = [
   {
     key: "1",
@@ -60,9 +67,20 @@ export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
   const myImg = 1;
+=======
+//currPose.Duration = 100 % (zB 10 sekunden)
+//bei 2 sekunden wäre es
+//2/10 * 100
+export default function Pose(props) {
+  const currPose = props.data;
+  const [endTime, setEndTime] = useState(Date.now());
+  const [mySeconds, setSeconds] = useState(0);
+>>>>>>> c5f829282a063acdcf892ab165541993e35a34d6
 
   useEffect(() => {
     if (currPose !== undefined) {
+      // Since this variable was _only_ used in one spot, it's a best
+      // practice to not create a new variable and just put the value in directly
       setEndTime(Date.now() + currPose.Duration * 1000);
     }
   }, [currPose]);
@@ -85,19 +103,32 @@ export default function Pose(props) {
         )}
         overtime
         onComplete={props.onComplete}
+        onTick={({ seconds }) =>
+          setSeconds(currPose.Duration - seconds)
+        }
       />
 
       <View style={styles.CurrentImage}>
+<<<<<<< HEAD
         {/** 
         {bulkImages.map((index) => (
           <img src={index.imagePath} title={index.key} alt={index.key} />
         ))}*/}
         <img src={require("../img/3.jpg")} alt="DownwardDog" />
+=======
+        <img src={YogaPose1} alt="DownwardDog" />
+        <ProgressBar
+          bgcolor={MyColors.myGreen}
+          completed={(mySeconds / currPose.Duration) * 100}
+        />
+>>>>>>> c5f829282a063acdcf892ab165541993e35a34d6
       </View>
     </View>
   );
 }
 
+// If you're going to use StyledComponents you don't need to use StyleSheet.create
+// Generally people use either one or the other
 const styles = StyleSheet.create({
   CurrentImage: {
     width: 600,
@@ -131,10 +162,12 @@ const styles = StyleSheet.create({
         />
     somewhere else an jhust have a variable in the text?
 
+    I'm not sure I undersatnd your question
+
     2. I have a callback for completed, how can i call a function in the parent? 
     guess the same question like with the button"
 
-
+    This component can add a "onCompleted" prop and then just call the parent
 
     Snippets:
     React countdown: https://www.npmjs.com/package/react-countdown#now

@@ -2,12 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Countdown from "react-countdown";
 import styled from "styled-components";
-<<<<<<< HEAD
 import image1 from "../img/1.jpg";
-=======
 
 import ProgressBar from "./progressBar";
->>>>>>> c5f829282a063acdcf892ab165541993e35a34d6
 import YogaPose1 from "../assets/YogaPose1.jpg";
 import { MyColors } from "../styles/MyColors";
 
@@ -32,10 +29,10 @@ const Img_CurrPose = styled.div`
     marginTop: 10,
     borderRadius: 10,
     border: '5px solid rgba(0, 0, 0, 0.2)', 
-    overflow: 'hidden',
+    overflow: 'hidden'
+}
     `;
 
-<<<<<<< HEAD
 const bulkImages = [
   {
     key: "1",
@@ -66,16 +63,12 @@ const bulkImages = [
 export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
-  const myImg = 1;
-=======
-//currPose.Duration = 100 % (zB 10 sekunden)
-//bei 2 sekunden wäre es
-//2/10 * 100
-export default function Pose(props) {
-  const currPose = props.data;
-  const [endTime, setEndTime] = useState(Date.now());
   const [mySeconds, setSeconds] = useState(0);
->>>>>>> c5f829282a063acdcf892ab165541993e35a34d6
+
+  const myImg = 1;
+  //currPose.Duration = 100 % (zB 10 sekunden)
+  //bei 2 sekunden wäre es
+  //2/10 * 100
 
   useEffect(() => {
     if (currPose !== undefined) {

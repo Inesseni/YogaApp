@@ -65,9 +65,7 @@ export default function Pose(props) {
         )}
         overtime
         onComplete={props.onComplete}
-        onTick={({ seconds }) =>
-          setSeconds(currPose.Duration - seconds)
-        }
+        onTick={({ seconds }) => setSeconds(currPose.Duration - seconds)}
       />
 
       <View style={styles.CurrentImage}>

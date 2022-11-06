@@ -21,7 +21,7 @@ const MainPoseContainer = styled.div((props) => ({
   alignItems: "center",
 }));
 const PosesContainer = styled.div((props) => ({
-height: "100vh",
+  height: "100vh",
   display: "flex",
   maxWidth: "300px",
   flexDirection: "column",
@@ -47,7 +47,6 @@ function Stretchroutine() {
   const nextPose = items[CurrIndex + 1];
   const Server_URL = `https://elliottrarden.me/assets/stretches.json`;
 
-  
   //this runs only once when website opened -> right approach
   //variables used in each .fetch line is the result of the .fetch above
   useEffect(() => {
@@ -73,8 +72,9 @@ function Stretchroutine() {
               name={item.Name}
               completed={false}
               onClick={function () {
-                
-                const myIndex = items.findIndex(obj => obj.Name === item.Name);
+                const myIndex = items.findIndex(
+                  (obj) => obj.Name === item.Name
+                );
                 setCurrIndex(myIndex);
                 item.completed = true;
               }}
@@ -83,10 +83,13 @@ function Stretchroutine() {
         </MyUl>
       </PosesContainer>
       <MainPoseContainer>
-        <Pose data={items[CurrIndex % items.length]} onComplete={() => { 
-          items[CurrIndex].completed=true;
-          console.log(items[CurrIndex].completed);
-          }} />
+        <Pose
+          data={items[CurrIndex % items.length]}
+          onComplete={() => {
+            items[CurrIndex].completed = true;
+            console.log(items[CurrIndex].completed);
+          }}
+        />
 
         <PosePreview
           data={items[(CurrIndex + 1) % items.length]}

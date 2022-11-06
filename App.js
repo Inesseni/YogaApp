@@ -22,7 +22,9 @@ const App = () => {
         <Stack.Screen
           name="Stretch"
           component={Stretchroutine}
-          options={{ title: "Your stretching routine" }}
+          options={{
+            title: "Your stretching routine",
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -30,7 +32,6 @@ const App = () => {
 };
 
 export default App;
-
 
 // i cant check the boy from the parent when time is over ?! do i need to rerender or sth?
 // maybe we should skip a pose if it is already checked?

@@ -7,22 +7,6 @@ import ProgressBar from "./progressBar";
 import { resources } from './bulkImages'
 import { MyColors } from "../styles/MyColors";
 
-const Button = styled.button`
-  /* Adapt the colors based on primary prop */
-  background: MyColors.Primary;
-  color: ${(props) => (props.primary ? "white" : MyColors.Primary)};
-
-  font-size: 1em;
-  margin: 2em;
-  padding: 0.25em 1em;
-  border: 2px solid #ea9999;
-  border-radius: 10px;
-  &:hover {
-    background-color: #ea9999;
-    color: white;
-  }
-`;
-
 //currPose.Duration = 100 % (zB 10 sekunden)
 //bei 2 sekunden wäre es
 //2/10 * 100
@@ -35,8 +19,7 @@ export default function Pose(props) {
     if (currPose !== undefined) {
       // Since this variable was _only_ used in one spot, it's a best
       // practice to not create a new variable and just put the value in directly
-      // setEndTime(Date.now() + currPose.Duration * 1000);
-      setEndTime(Date.now() + 1000);
+      setEndTime(Date.now() + currPose.Duration * 1000);
     }
   }, [currPose]);
 

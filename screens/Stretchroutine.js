@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-import ProgressBar from "../components/progressBar";
 import Pose from "../components/Pose";
 import PosePreview from "../components/PosePreview";
 import PoseListItem from "../components/PoseListItem";
-import bulkImages from "../components/bulkImages";
 import { MyColors } from "../styles/MyColors";
 
 const Container = styled.div((props) => ({
@@ -39,13 +37,10 @@ const MyUl = styled.ul((props) => ({
 
 function Stretchroutine() {
   //state variables, if changes, site rerenders. u want to render little as possible
-  const [CurrIndex, setCurrIndex] = useState(0);
+  const [currIndex, setCurrIndex] = useState(0);
   const [items, setItems] = useState([]);
-  const [poseIndex, setPoseIndex] = useState(0);
 
   // this "updates" every time automatically when the app renders, so every time state variable changes
-  const currPose = items[CurrIndex];
-  const nextPose = items[CurrIndex + 1];
   const Server_URL = `https://elliottrarden.me/assets/stretches.json`;
 
   //this runs only once when website opened -> right approach
@@ -53,52 +48,60 @@ function Stretchroutine() {
   useEffect(() => {
     fetch(Server_URL)
       .then((response) => response.json())
-      .then(function logData(jsn) {
-        console.log(jsn.length);
-        return jsn;
-      })
       .then(function setData(resultOfThePreviousThenStatement) {
         setItems(resultOfThePreviousThenStatement);
       });
   }, []);
-  //const myIndex = items.getIndex(item.Name));
+
+  const allCompleted = items.every((item) => item.completed);
+
+  // if current pose is already completed, jump to next one
+  if (items[currIndex]?.completed && !allCompleted) {
+    setCurrIndex((currIndex + 1) % items.length);
+  }
 
   return (
     <Container>
       <PosesContainer>
         <MyUl>
-          {items.map((item) => (
+          {items.map((item, index) => (
             <PoseListItem
               key={item.Name}
               name={item.Name}
-              completed={false}
+              completed={item.completed}
               onClick={function () {
-                const myIndex = items.findIndex(
-                  (obj) => obj.Name === item.Name
-                );
-                setCurrIndex(myIndex);
-                item.completed = true;
+                setCurrIndex(index);
               }}
             />
           ))}
         </MyUl>
       </PosesContainer>
-      <MainPoseContainer>
-        <Pose
-          data={items[CurrIndex % items.length]}
-          onComplete={() => {
-            items[CurrIndex].completed = true;
-            console.log(items[CurrIndex].completed);
-          }}
+      {allCompleted ? (
+        <Pose // TODO: finished screen
+          data={items[0]}
         />
+      ) : (
+        <MainPoseContainer>
+          <Pose
+            data={items[currIndex]}
+            onComplete={() => {
+              // you can only change items by setting it again
+              // You can only changes _state_ variables with _setState_ functions (bc its from the useState hook)
+              const nextItems = items;
+              nextItems[currIndex].completed = true;
+              setItems(nextItems);
+              setCurrIndex((currIndex + 1) % items.length);
+            }}
+          />
 
-        <PosePreview
-          data={items[(CurrIndex + 1) % items.length]}
-          onClickMe={function () {
-            setCurrIndex(CurrIndex + 1);
-          }}
-        />
-      </MainPoseContainer>
+          <PosePreview
+            data={items[currIndex]}
+            onClickMe={function () {
+              setCurrIndex((currIndex + 1) % items.length);
+            }}
+          />
+        </MainPoseContainer>
+      )}
     </Container>
   );
 }

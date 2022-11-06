@@ -2,8 +2,6 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
 
-import YogaPose2 from "../assets/YogaPose2.jpg";
-
 const NextButton = styled.button`
   /* Adapt the colors based on primary prop */
   background: white;
@@ -39,7 +37,7 @@ export default function PosePreview(props) {
         </View>
 
         <View style={styles.NextImageThumbnail}>
-          <img src={require("../img/4.jpg")} alt="Warrior" />
+          <img alt="Warrior" />
         </View>
       </View>
     </NextButton>

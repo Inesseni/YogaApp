@@ -19,7 +19,6 @@ export const resources = {
   "butterfly.jpg": require("../img/butterfly.jpg"),
   "leg_bend_r.jpg": require("../img/leg_bend_r.jpg"),
   "leg_bend_l.jpg": require("../img/leg_bend_l.jpg"),
-  "straddle.jpg": require("../img/straddle.jpg"),
   "twist_r.jpg": require("../img/twist_r.jpg"),
   "twist_l.jpg": require("../img/twist_l.jpg"),
   "bridge.jpg": require("../img/bridge.jpg"),

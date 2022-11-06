@@ -35,7 +35,8 @@ export default function Pose(props) {
     if (currPose !== undefined) {
       // Since this variable was _only_ used in one spot, it's a best
       // practice to not create a new variable and just put the value in directly
-      setEndTime(Date.now() + currPose.Duration * 1000);
+      // setEndTime(Date.now() + currPose.Duration * 1000);
+      setEndTime(Date.now() + 1000);
     }
   }, [currPose]);
 

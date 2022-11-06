@@ -2,8 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Countdown from "react-countdown";
 import styled from "styled-components";
+<<<<<<< HEAD
+import image1 from "../img/1.jpg";
+=======
 
 import ProgressBar from "./progressBar";
+>>>>>>> c5f829282a063acdcf892ab165541993e35a34d6
 import YogaPose1 from "../assets/YogaPose1.jpg";
 import { MyColors } from "../styles/MyColors";
 
@@ -31,6 +35,39 @@ const Img_CurrPose = styled.div`
     overflow: 'hidden',
     `;
 
+<<<<<<< HEAD
+const bulkImages = [
+  {
+    key: "1",
+    imagePath: "../img/1.jpg",
+  },
+  {
+    key: "2",
+    imagePath: "../img/2.jpg",
+  },
+  {
+    key: "3",
+    imagePath: "../img/3.jpg",
+  },
+  {
+    key: "4",
+    imagePath: "../img/4.jpg",
+  },
+  {
+    key: "5",
+    imagePath: "../img/5.jpg",
+  },
+  {
+    key: "6",
+    imagePath: "../img/6.jpg",
+  },
+];
+
+export default function Pose(props) {
+  const currPose = props.data;
+  const [endTime, setEndTime] = useState(Date.now());
+  const myImg = 1;
+=======
 //currPose.Duration = 100 % (zB 10 sekunden)
 //bei 2 sekunden wäre es
 //2/10 * 100
@@ -38,6 +75,7 @@ export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
   const [mySeconds, setSeconds] = useState(0);
+>>>>>>> c5f829282a063acdcf892ab165541993e35a34d6
 
   useEffect(() => {
     if (currPose !== undefined) {

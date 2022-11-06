@@ -5,6 +5,7 @@ import ProgressBar from "../components/progressBar";
 import Pose from "../components/Pose";
 import PosePreview from "../components/PosePreview";
 import PoseListItem from "../components/PoseListItem";
+import bulkImages from "../components/bulkImages";
 import { MyColors } from "../styles/MyColors";
 
 const Container = styled.div((props) => ({

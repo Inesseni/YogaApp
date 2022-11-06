@@ -10,6 +10,8 @@ const ProgressBar = (props) => {
       backgroundColor: MyColors.lightGrey,
 
     }
+
+    console.log({completed})
   
     const fillerStyles = {
       height: '100%',
@@ -17,8 +19,8 @@ const ProgressBar = (props) => {
       backgroundColor: bgcolor,
       borderRadius: 'inherit',
       textAlign: 'right',
-
-      transition: 'width 1s linear',
+      // if completed is 100 %, transition is 'undefined', else its 1
+      transition: completed < 5 ? undefined : 'width 1s linear',
     }
   
     const labelStyles = {

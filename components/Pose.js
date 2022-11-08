@@ -1,34 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Countdown from "react-countdown";
-import styled from "styled-components";
-
-
 import ProgressBar from "./progressBar";
-import { resources } from './bulkImages'
+import { resources } from "./bulkImages";
 import { MyColors } from "../styles/MyColors";
-
-//currPose.Duration = 100 % (zB 10 sekunden)
-//bei 2 sekunden wäre es
-//2/10 * 100
 
 export default function Pose(props) {
   const currPose = props.data;
   const [endTime, setEndTime] = useState(Date.now());
   const [mySeconds, setSeconds] = useState(0);
 
-
   useEffect(() => {
     if (currPose !== undefined) {
       // Since this variable was _only_ used in one spot, it's a best
       // practice to not create a new variable and just put the value in directly
+
       setEndTime(Date.now() + currPose.Duration * 1000);
+      //setEndTime(Date.now() + 1000);
     }
   }, [currPose]);
 
   if (currPose === undefined) {
     return null;
   }
+  console.log(currPose.url);
 
   return (
     <View style={styles.YogastretchWrapper}>
@@ -48,10 +43,10 @@ export default function Pose(props) {
       />
 
       <View style={styles.CurrentImage}>
-        <img src={resources[currPose.url]} alt="DownwardDog" />
+        <img src={resources[currPose.url]} alt={currPose.Name} />
         <ProgressBar
           bgcolor={MyColors.myGreen}
-          completed={(mySeconds / currPose.Duration) * 100}
+          completed={((mySeconds + 1) / currPose.Duration) * 100}
         />
       </View>
     </View>
@@ -86,20 +81,6 @@ const styles = StyleSheet.create({
 });
 
 /*
-    1.: Can i put the 
-        <Countdown
-            date={Date.now() + 30000}
-            renderer={renderer}
-        />
-    somewhere else an jhust have a variable in the text?
-
-    I'm not sure I undersatnd your question
-
-    2. I have a callback for completed, how can i call a function in the parent? 
-    guess the same question like with the button"
-
-    This component can add a "onCompleted" prop and then just call the parent
-
     Snippets:
     React countdown: https://www.npmjs.com/package/react-countdown#now
 */

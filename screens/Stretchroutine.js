@@ -5,6 +5,7 @@ import Pose from "../components/Pose";
 import PosePreview from "../components/PosePreview";
 import PoseListItem from "../components/PoseListItem";
 import { MyColors } from "../styles/MyColors";
+import FinishedRoutine from "../components/FinishedRoutine";
 
 const Container = styled.div((props) => ({
   display: "flex",
@@ -50,7 +51,9 @@ function Stretchroutine() {
       .then((response) => response.json())
       .then(function setData(resultOfThePreviousThenStatement) {
         setItems(resultOfThePreviousThenStatement);
+        console.log(resultOfThePreviousThenStatement);
       });
+    //.then(console.log(items));
   }, []);
 
   const allCompleted = items.every((item) => item.completed);
@@ -77,15 +80,12 @@ function Stretchroutine() {
         </MyUl>
       </PosesContainer>
       {allCompleted ? (
-        <Pose // TODO: finished screen
-          data={items[0]}
-        />
+        <FinishedRoutine />
       ) : (
         <MainPoseContainer>
           <Pose
             data={items[currIndex]}
             onComplete={() => {
-              // you can only change items by setting it again
               // You can only changes _state_ variables with _setState_ functions (bc its from the useState hook)
               const nextItems = items;
               nextItems[currIndex].completed = true;

@@ -12,7 +12,6 @@ const NextButton = styled.button`
   height: 80px;
   width: 300px;
   margin-top: 30px;
-  padding: 0;
 
   &:hover {
     background-color: white;
@@ -49,6 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flex: 1,
     justifyContent: "space-between",
+    padding: 10,
   },
   NextImageThumbnail: {
     flex: 1,

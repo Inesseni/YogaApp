@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import styled from "styled-components";
+import { resources } from "./bulkImages";
 
 const NextButton = styled.button`
   /* Adapt the colors based on primary prop */
@@ -36,7 +37,7 @@ export default function PosePreview(props) {
         </View>
 
         <View style={styles.NextImageThumbnail}>
-          <img alt="Warrior" />
+          <img src={resources[nextPose.url]} alt={" "} />
         </View>
       </View>
     </NextButton>

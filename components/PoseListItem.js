@@ -7,6 +7,7 @@ const Button = styled.button`
   color: ${(props) => (props.primary ? "white" : "palevioletred")};
   border: 2px solid white;
   overflow: hidden;
+
   max-height: 50px;
   width: 100%;
   margin-top: 2px;

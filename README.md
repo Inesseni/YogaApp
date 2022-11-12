@@ -18,4 +18,4 @@ A very simple startscreen, that encourages you to keep stretching everyday!
 
 The guided flexibility routine. The user can either follow the given flow of the routine, or click on one of the Stretches in the list to jump to a specific stretch.
 
-<img align="left" alt="Visual Studio Code" width="100%" src="img\screengrab_2.JPG" style="padding-right:10px;" />
+<img align="left" alt="Screen for the flexibility routine" width="100%" src="img\screengrab_2.png" style="padding-right:10px;" />
